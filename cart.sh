@@ -50,16 +50,16 @@ fi
 mkdir -p /app  &>> $LOGFILE
 VALIDATE $? "Make a directory"
 
-curl -L -o /tmp/user.zip https://roboshop-builds.s3.amazonaws.com/user.zip &>> $LOGFILE
+curl -L -o /tmp/user.zip https://roboshop-builds.s3.amazonaws.com/cart.zip &>> $LOGFILE
 VALIDATE $? "Install cart application"
 
 cd /app 
 VALIDATE $? "open Roboshop directory" 
 
-unzip /tmp/cart.zip &>> $LOGFILE
+unzip -o /tmp/cart.zip &>> $LOGFILE
 VALIDATE $? "Unzip cart application"
 
-npm install  &>> $LOGFILE
+npm install  &>> $LOGFILE 
 VALIDATE $? "Installing npm"
 
 cp /home/centos/roboshop-shell/user.service /etc/systemd/system/cart.service &>> $LOGFILE
