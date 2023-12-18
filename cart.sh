@@ -50,26 +50,26 @@ fi
 mkdir -p /app  &>> $LOGFILE
 VALIDATE $? "Make a directory"
 
-curl -L -o /tmp/user.zip https://roboshop-builds.s3.amazonaws.com/cart.zip &>> $LOGFILE
+curl -L -o /tmp/cart.zip https://roboshop-builds.s3.amazonaws.com/cart.zip &>> $LOGFILE
 VALIDATE $? "Install cart application"
 
 cd /app 
 VALIDATE $? "open Roboshop directory" 
 
-unzip -o /tmp/cart.zip &>> $LOGFILE
+unzip /tmp/cart.zip &>> $LOGFILE
 VALIDATE $? "Unzip cart application"
 
 npm install  &>> $LOGFILE 
 VALIDATE $? "Installing npm"
 
-cp /home/centos/roboshop-shell/user.service /etc/systemd/system/cart.service &>> $LOGFILE
+cp /home/centos/roboshop-shell/cart.service /etc/systemd/system/cart.service &>> $LOGFILE
 VALIDATE $? "Installing dependenices"
 
 systemctl daemon-reload &>> $LOGFILE
 VALIDATE $? "Daemon reload"
 
-systemctl enable user &>> $LOGFILE
+systemctl enable cart &>> $LOGFILE
 VALIDATE $? "Enabling cart application"
 
-systemctl start user &>> $LOGFILE
+systemctl start cart &>> $LOGFILE
 VALIDATE $? "Starting cart application"
