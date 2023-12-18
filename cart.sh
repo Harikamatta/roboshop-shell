@@ -56,7 +56,7 @@ VALIDATE $? "Install cart application"
 cd /app 
 VALIDATE $? "open Roboshop directory" 
 
-unzip /tmp/cart.zip &>> $LOGFILE
+unzip -o /tmp/cart.zip &>> $LOGFILE
 VALIDATE $? "Unzip cart application"
 
 npm install  &>> $LOGFILE 
@@ -66,7 +66,7 @@ cp /home/centos/roboshop-shell/cart.service /etc/systemd/system/cart.service &>>
 VALIDATE $? "Installing dependenices"
 
 systemctl daemon-reload &>> $LOGFILE
-VALIDATE $? "Daemon reload"
+VALIDATE $? "cart Daemon reload"
 
 systemctl enable cart &>> $LOGFILE
 VALIDATE $? "Enabling cart application"
