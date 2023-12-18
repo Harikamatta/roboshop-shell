@@ -4,6 +4,7 @@ VALIDATE(){
     if [ $1 -ne 0 ]
     then 
     echo -e "$2 ...$R FAILED $N"
+    exit 1
     else
     echo -e " $2... $G SUCCESS $N"
 fi }
@@ -24,7 +25,7 @@ echo -e "$G Your a root user $N"
 fi #reverse of if condition
 
 cp monog.repo /etc/yum.repos.d/mongo.repo  &>> $LOGFILE
-VALIDATE $? "Copied MONGODB Rrepository"
+VALIDATE $? "Copied MONGODB Repository"
 
 dnf install mongodb-org -y  &>> $LOGFILE
 VALIDATE $? "Installing Mongodb"
