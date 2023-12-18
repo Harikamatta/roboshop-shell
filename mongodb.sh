@@ -27,7 +27,7 @@ fi #reverse of if condition
 cp mongo.repo  /etc/yum.repos.d/mongo.repo  &>> $LOGFILE
 VALIDATE $? "Copied MONGODB Repository"
 
-dnf install mongodb-org -y &>> $LOGFILE
+sudo dnf install mongodb-org -y &>> $LOGFILE
 VALIDATE $? "Installing Mongodb"
 
 systemctl enable mongod &>> $LOGFILE
