@@ -32,7 +32,7 @@ fi # fi means reverse of if, indicating condition end
 cp /home/centos/roboshop-shell/mongo.repo /etc/yum.repos.d/mongo.repo 
 VALIDATE $? "Copied MongoDB Repo"
 
-dnf install mongodb-org -y 
+dnf install monogdb-org -y 
 VALIDATE $? "Installing MongoDB"
 
 systemctl enable mongod &>> $LOGFILE
