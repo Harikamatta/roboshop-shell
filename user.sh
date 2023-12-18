@@ -57,7 +57,7 @@ VALIDATE $? "Install cart application"
 cd /app 
 VALIDATE $? "open Roboshop directory" 
 
-unzip /tmp/cart.zip &>> $LOGFILE
+unzip /tmp/user.zip &>> $LOGFILE
 VALIDATE $? "Unzip user application"
 
 npm install  &>> $LOGFILE 
