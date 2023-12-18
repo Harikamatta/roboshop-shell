@@ -24,7 +24,7 @@ else
 echo -e "$G Your a root user $N"
 fi #reverse of if condition
 
-cp monog.repo /etc/yum.repos.d/mongo.repo  &>> $LOGFILE
+cp mongo.repo  /etc/yum.repos.d/mongo.repo  &>> $LOGFILE
 VALIDATE $? "Copied MONGODB Repository"
 
 dnf install mongodb-org -y  &>> $LOGFILE
