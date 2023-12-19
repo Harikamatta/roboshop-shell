@@ -29,7 +29,7 @@ else
     echo "You are root user"
 fi # fi means reverse of if, indicating condition end
 
-dnf install maven -y
+dnf install maven -y &>> $LOGFILE
 VALIDATE $? "Installing maven"
 
 id roboshop #if roboshop user does not exist, then it is failure
@@ -41,41 +41,41 @@ else
     echo -e "roboshop user already exist $Y SKIPPING $N"
 fi
 
-mkdir -p /app  
+mkdir -p /app  &>> $LOGFILE
 VALIDATE $? "Make a directory"
 
-curl -L -o /tmp/shipping.zip https://roboshop-builds.s3.amazonaws.com/shipping.zip
+curl -L -o /tmp/shipping.zip https://roboshop-builds.s3.amazonaws.com/shipping.zip &>> $LOGFILE
 VALIDATE $? "Downloading shipping"
 
 cd /app
 
-unzip /tmp/shipping.zip
+unzip -o /tmp/shipping.zip &>> $LOGFILE
 VALIDATE $? "Unzipping shipping"
 
-mvn clean package
+mvn clean package &>> $LOGFILE
 VALIDATE $? "Installing maven clean package"
 
-mv target/shipping-1.0.jar shipping.jar
+mv target/shipping-1.0.jar shipping.jar &>> $LOGFILE
 VALIDATE $? "Renaming jar file"
 
-cp /home/centos/roboshop-shell/shipping.service /etc/systemd/system/shipping.service
+cp /home/centos/roboshop-shell/shipping.service /etc/systemd/system/shipping.service &>> $LOGFILE
 VALIDATE $? "copying shipping service"
 
-systemctl daemon-reload
+systemctl daemon-reload &>> $LOGFILE
 VALIDATE $? "Shipping Daemon-Relaod"
 
-systemctl enable shipping
+systemctl enable shipping &>> $LOGFILE
 VALIDATE $? "Enabling Shipping"
 
-systemctl start shipping
+systemctl start shipping &>> $LOGFILE
 VALIDATE $? "Starting Shipping"
 
-dnf install mysql -y
+dnf install mysql -y &>> $LOGFILE
 VALIDATE $? "Installing Mysql client"
 
-mysql -h mysql.daws-76s.online -uroot -pRoboShop@1 < /app/schema/shipping.sql
+mysql -h mysql.daws-76s.online -uroot -pRoboShop@1 < /app/schema/shipping.sql &>> $LOGFILE
 VALIDATE $? "loading shipping data" 
 
-systemctl restart shipping
+systemctl restart shipping &>> $LOGFILE
 VALIDATE $? "Restarting Shipping"
 
