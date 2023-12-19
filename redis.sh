@@ -8,7 +8,7 @@ N="\e[0m"
 
 TIMESTAMP=$(date +%F-%H-%M-%S)
 LOGFILE="/tmp/$0-$TIMESTAMP.log"
-exec &>$LOGFILE
+
 
 echo "script stareted executing at $TIMESTAMP" &>> $LOGFILE
 
@@ -32,6 +32,7 @@ fi # fi means reverse of if, indicating condition end
 
 
 dnf install https://rpms.remirepo.net/enterprise/remi-release-8.rpm -y
+
 VALIDATE $? "Installing Remi release"
 
 dnf module enable redis:remi-6.2 -y
