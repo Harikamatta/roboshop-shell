@@ -5,7 +5,7 @@ R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
-MONGDB_HOST=mongodb.daws-76s.online
+MONGDB_HOST=mongodb.daws76s.online
 
 TIMESTAMP=$(date +%F-%H-%M-%S)
 LOGFILE="/tmp/$0-$TIMESTAMP.log"
@@ -31,13 +31,16 @@ else
 fi # fi means reverse of if, indicating condition end
 
 dnf module disable nodejs -y &>> $LOGFILE
-VALIDATE $? "Disabling nodejs"
 
-dnf module enable nodejs:18 -y &>> $LOGFILE
-VALIDATE $? "Enabling nodejs"
+VALIDATE $? "Disabling current NodeJS"
 
-dnf install nodejs -y &>> $LOGFILE
-VALIDATE $? "Installing nodejs"
+dnf module enable nodejs:18 -y  &>> $LOGFILE
+
+VALIDATE $? "Enabling NodeJS:18"
+
+dnf install nodejs -y  &>> $LOGFILE
+
+VALIDATE $? "Installing NodeJS:18"
 
 id roboshop #if roboshop user does not exist, then it is failure
 if [ $? -ne 0 ]
@@ -48,32 +51,37 @@ else
     echo -e "roboshop user already exist $Y SKIPPING $N"
 fi
 
-mkdir -p /app  &>> $LOGFILE
-VALIDATE $? "Make a directory"
+mkdir -p /app
 
-curl -L -o /tmp/user.zip https://roboshop-builds.s3.amazonaws.com/user.zip &>> $LOGFILE
-VALIDATE $? "Install cart application"
+VALIDATE $? "creating app directory"
+
+curl -o /tmp/user.zip https://roboshop-builds.s3.amazonaws.com/user.zip  &>> $LOGFILE
+
+VALIDATE $? "Downloading user application"
 
 cd /app 
-VALIDATE $? "open Roboshop directory" 
 
-unzip -o /tmp/user.zip &>> $LOGFILE
-VALIDATE $? "Unzip user application"
+unzip -o /tmp/user.zip  &>> $LOGFILE
 
-npm install  &>> $LOGFILE 
-VALIDATE $? "Installing npm"
+VALIDATE $? "unzipping user"
 
-cp /home/centos/roboshop-shell/user.service /etc/systemd/system/user.service &>> $LOGFILE
-VALIDATE $? "Installing dependenices"
+npm install  &>> $LOGFILE
+
+VALIDATE $? "Installing dependencies"
+
+cp /home/centos/roboshop-shell/user.service /etc/systemd/system/user.service
+
+VALIDATE $? "Copying user service file"
 
 systemctl daemon-reload &>> $LOGFILE
-VALIDATE $? "user Daemon reload"
+
+VALIDATE $? "user daemon reload"
 
 systemctl enable user &>> $LOGFILE
-VALIDATE $? "Enabling user application"
+VALIDATE $? "Enable user"
 
 systemctl start user &>> $LOGFILE
-VALIDATE $? "Starting user application"
+VALIDATE $? "Starting user"
 
 cp /home/centos/roboshop-shell/mongo.repo /etc/yum.repos.d/mongo.repo
 VALIDATE $? "copying mongodb repo"
