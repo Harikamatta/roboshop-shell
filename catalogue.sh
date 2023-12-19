@@ -74,3 +74,16 @@ VALIDATE $? "Enabling Catalogue application"
 systemctl start catalogue &>> $LOGFILE
 VALIDATE $? "Starting Catalogue application"
 
+cp /home/centos/roboshop-shell/mongo.repo /etc/yum.repos.d/mongo.repo
+VALIDATE $? "copying mongo repo"
+
+dnf install mongodb-org-shell -y
+VALIDATE $? "Installing mongodb"
+
+mongo --host mongodb.daws-76s.online </app/schema/catalogue.js
+
+
+
+
+
+
