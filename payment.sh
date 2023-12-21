@@ -15,19 +15,19 @@ echo "Script started executing at $TIMESTAMP" &>> $LOGFILE
 VALIDATE(){
     if [ $1 -ne 0 ]
     then 
-    echo "$2 .. $R FAILED $N "
+    echo -e "$2 .. $R FAILED $N "
     exit 1
     else
-    echo "$2 .. $G SUCCESS $N"
+    echo -e "$2 .. $G SUCCESS $N"
 fi 
 }
 
 if [ $ID -ne 0 ]
     then 
-    echo "$R Error: : Please ru nthe script with root access $N "
+    echo -e "$R Error: : Please ru nthe script with root access $N "
     exit 1
     else
-    echo "$G root user $N"
+    echo -e "$G root user $N"
 fi 
 dnf install python36 gcc python3-devel -y &>> $LOGFILE
 VALIDATE $? "Installing python"
